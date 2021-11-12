@@ -1,0 +1,29 @@
+{
+  "name": "Content Filter",
+  "description": "MADS Social Media Content Filter Chrome Extension",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+	"storage"
+  ],
+  "content_scripts": [
+	{
+	  "matches": [
+		"https://twitter.com/*"
+	  ],
+	  "js": [
+		"twitter/contentScripts/twitterScraper.js"
+	  ],
+	  "run_at": "document_end"
+	}
+  ],
+  "action": {
+	"default_popup": "twitter/popup/popup.html"
+  },
+  "background": {
+	"service_worker": "twitter/background/background.js"
+  },
+  "host_permissions": [
+	"https://content-filter-api-js23pan5iq-uc.a.run.app/*"
+  ]
+}
