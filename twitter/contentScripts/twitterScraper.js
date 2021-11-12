@@ -10,7 +10,7 @@ const twitterObserver = new MutationObserver(() => {
     if (url === 'https://twitter.com/home') {
       addObserverIfTimelineAvailable();
     } else {
-      timelineObserver.disconnect()
+      timelineObserver.disconnect();
       processed_tweets.length = 0;
     }
     lastUrl = url;
@@ -48,18 +48,20 @@ const validateTweet = (tweet, tweetArticle) => {
   const tweetObject = constructTweetArticleObject(tweetArticle);
   const display_style = tweet.style.display;
 
-  const matched_tweets = processed_tweets.filter(el => el.text === tweetObject.text)
+  const matched_tweets = processed_tweets.filter(el => el.text === tweetObject.text);
   if (Array.isArray(matched_tweets) && matched_tweets.length === 0) {
     tweet.style.display = 'none';
     chrome.runtime.sendMessage({type: "validation", ...tweetObject}, (response) => {
       tweetObject['valid'] = response.valid;
       processed_tweets.push(tweetObject);
       if (response.valid) {
+		console.log('Tweet Approved!');
         tweet.style.display = display_style;
       }
     })
   } else {
     if (!matched_tweets[0].valid) {
+	  console.log('Tweet Blocked!');
       tweet.style.display = 'none';
     }
   }
