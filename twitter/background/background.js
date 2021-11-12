@@ -13,7 +13,8 @@ chrome.runtime.onMessage.addListener(
           body: JSON.stringify({body: request.text, threshold: threshold}),
         }).then(response => response.json())
           .then(data => {
-            sendResponse({valid: data.filter})
+          console.log(data);
+            sendResponse({valid: data.filter, confidencePositive: data.confidencepostive})
           })
           .catch(error => console.log("error", error))
       });

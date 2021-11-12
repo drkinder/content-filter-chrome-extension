@@ -53,6 +53,7 @@ const validateTweet = (tweet, tweetArticle) => {
     tweet.style.display = 'none';
     chrome.runtime.sendMessage({type: "validation", ...tweetObject}, (response) => {
       tweetObject['valid'] = response.valid;
+      tweetObject['confidencePositive'] = response.confidencePositive;
       processed_tweets.push(tweetObject);
       if (response.valid) {
 		console.log('Tweet Approved!');
@@ -62,7 +63,8 @@ const validateTweet = (tweet, tweetArticle) => {
   } else {
     if (!matched_tweets[0].valid) {
 	  console.log('Tweet Blocked!');
-      console.log(tweetObject.text);
+      console.log(`Confidence Positive: ${matched_tweets[0].confidencePositive}`);
+      console.log(matched_tweets[0].text);
       tweet.style.display = 'none';
     }
   }
