@@ -7,7 +7,7 @@ chrome.runtime.onMessage.addListener(
       chrome.storage.local.get('threshold', (retrieved_data) => {
         const threshold = (typeof retrieved_data.threshold === 'undefined' ? 0.5 : retrieved_data.threshold);
 		console.log(threshold);
-        fetch(url + 'filter-twitter-content/', {
+        fetch(url + 'filter-multinomial-naive-bayes/', {
           method: 'POST',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({body: request.text, threshold: threshold}),

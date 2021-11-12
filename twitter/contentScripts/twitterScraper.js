@@ -62,6 +62,7 @@ const validateTweet = (tweet, tweetArticle) => {
   } else {
     if (!matched_tweets[0].valid) {
 	  console.log('Tweet Blocked!');
+      console.log(tweetObject.text);
       tweet.style.display = 'none';
     }
   }
