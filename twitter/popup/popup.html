@@ -5,9 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-<div class="sliderContainer">
-    <label for="thresholdRange">Set Threshold - [0,1]</label>
-    <input type="range" min="0" max="100" value="50" step="10" class="slider" id="thresholdRange">
+<form id="filteredWordForm">
+  <label for="filteredWordInput">Add word to Filter</label>
+  <input type="text" id="filteredWordInput" name="filteredWordInput">
+  <input type="submit" value="Add">
+</form>
+
+<ul id="filteredWordsList" ></ul>
+
+<div id="sliderContainer">
+    <label for="thresholdRange">Set threshold - [0,1]</label>
+    <input id="thresholdRange" type="range" min="0" max="100" value="50" step="10" >
 </div>
 <script src="popup.js"></script>
 </body>

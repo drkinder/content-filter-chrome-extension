@@ -1,33 +1,63 @@
-let lastUrl = undefined;
-const twitterObserverConfig = {childList: true, subtree: true};
+const twitterTittleObserverConfig = {childList: true, subtree: true};
 const twitterTimelineConfig = {childList: true, subtree: true};
-let timeline = null;
 const processed_tweets = [];
 
-const twitterObserver = new MutationObserver(() => {
-  const url = location.href;
-  if (lastUrl !== url) {
-    if (url === 'https://twitter.com/home') {
-      addObserverIfTimelineAvailable();
-    } else {
-      timelineObserver.disconnect();
-      processed_tweets.length = 0;
-    }
-    lastUrl = url;
+const pageToSelectorMap = [
+  {location: 'home', timelineSelector: '[aria-label="Timeline: Your Home Timeline"]'},
+  {location: 'explore', timelineSelector: '[aria-label="Timeline: Explore"]'},
+]
+
+function addTitleObserverIfAvailable() {
+  const title = document.getElementsByTagName('title')
+  if (!title || !title[0]) {
+    //The node we need does not exist yet.
+    //Wait 100ms and try again
+    window.setTimeout(addTitleObserverIfAvailable, 50);
+    return;
+  }
+  console.log(title[0].innerText)
+  twitterTitleObserver.observe(title[0], twitterTittleObserverConfig)
+
+}
+
+addTitleObserverIfAvailable();
+
+const twitterTitleObserver = new MutationObserver(() => {
+  const title = document.getElementsByTagName('title');
+
+  const titleText = title[0].innerText.toLowerCase();
+  const twitterLocationText = location.href.split('/').at(-1).toLowerCase();
+
+  const twitterLocation = pageToSelectorMap.find(location => location.location === twitterLocationText);
+
+  if (twitterLocation) {
+    addObserverIfTimelineAvailable(twitterLocation.timelineSelector);
+  } else if (titleText.includes(`@${twitterLocationText}`)) {
+    const newTwitterLocation = {
+      location: twitterLocationText,
+      timelineSelector: '[aria-label^="Timeline:"][aria-label*="Tweets"]'
+    };
+    pageToSelectorMap.push(newTwitterLocation);
+    addObserverIfTimelineAvailable(newTwitterLocation.timelineSelector);
+  } else {
+    timelineObserver.disconnect();
+    processed_tweets.length = 0;
   }
 })
 
-twitterObserver.observe(document, twitterObserverConfig);
 
+function addObserverIfTimelineAvailable(timelineSelector) {
+  const timeline = document.querySelector(timelineSelector);
 
-function addObserverIfTimelineAvailable() {
-  timeline = document.querySelector('[aria-label="Timeline: Your Home Timeline"]');
+  console.log(timeline)
   if (!timeline) {
-    // The node we need does not exist yet. Wait 100ms and try again
-    window.setTimeout(addObserverIfTimelineAvailable, 50);
+    //The node we need does not exist yet.
+    //Wait 100ms and try again
+    window.setTimeout(addObserverIfTimelineAvailable, 50, timelineSelector);
     return;
   }
-  // Observe the target node for configuration mutations
+  console.log(timeline)
+  // Start observing the target node for configured mutations
   timelineObserver.observe(timeline, twitterTimelineConfig);
 }
 
