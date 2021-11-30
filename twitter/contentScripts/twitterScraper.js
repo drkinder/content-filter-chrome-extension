@@ -88,12 +88,12 @@ const validateTweet = (tweet, tweetArticle) => {
       if (response.valid) {
 		console.log('Tweet Approved!');
         tweet.style.display = display_style;
-      }
+      } 
     })
   } else {
     if (!matched_tweets[0].valid) {
 	  console.log('Tweet Blocked!');
-      console.log(`Confidence Positive: ${matched_tweets[0].confidencePositive}`);
+      // console.log(`Confidence Positive: ${matched_tweets[0].confidencePositive}`);
       console.log(matched_tweets[0].text);
       tweet.style.display = 'none';
     }
