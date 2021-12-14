@@ -15,7 +15,6 @@ function addTitleObserverIfAvailable() {
     window.setTimeout(addTitleObserverIfAvailable, 50);
     return;
   }
-  console.log(title[0].innerText)
   twitterTitleObserver.observe(title[0], twitterTittleObserverConfig)
 
 }
@@ -49,14 +48,12 @@ const twitterTitleObserver = new MutationObserver(() => {
 function addObserverIfTimelineAvailable(timelineSelector) {
   const timeline = document.querySelector(timelineSelector);
 
-  console.log(timeline)
   if (!timeline) {
     //The node we need does not exist yet.
     //Wait 100ms and try again
     window.setTimeout(addObserverIfTimelineAvailable, 50, timelineSelector);
     return;
   }
-  console.log(timeline)
   // Start observing the target node for configured mutations
   timelineObserver.observe(timeline, twitterTimelineConfig);
 }
@@ -67,14 +64,14 @@ const timelineObserver = new MutationObserver((mutations) => {
     [...mutation.addedNodes].forEach(tweet => {
       const tweetArticles = [...tweet.getElementsByTagName("article")]
       if (Array.isArray(tweetArticles) && tweetArticles.length === 1) {
-        validateTweet(tweet, tweetArticles[0]);
+        filterTweet(tweet, tweetArticles[0]);
       }
     });
   });
 });
 
 
-const validateTweet = (tweet, tweetArticle) => {
+const filterTweet = (tweet, tweetArticle) => {
   const tweetObject = constructTweetArticleObject(tweetArticle);
   const display_style = tweet.style.display;
 
@@ -82,20 +79,18 @@ const validateTweet = (tweet, tweetArticle) => {
   if (Array.isArray(matched_tweets) && matched_tweets.length === 0) {
     tweet.style.display = 'none';
     chrome.runtime.sendMessage({type: "validation", ...tweetObject}, (response) => {
-      tweetObject['valid'] = response.valid;
-      tweetObject['confidencePositive'] = response.confidencePositive;
-      processed_tweets.push(tweetObject);
-      if (response.valid) {
-		console.log('Tweet Approved!');
+      processed_tweets.push({...tweetObject,...response});
+      if (!response.filter) {
+        console.log('Tweet Approved!');
         tweet.style.display = display_style;
-      } 
+      }
     })
   } else {
-    if (!matched_tweets[0].valid) {
-	  console.log('Tweet Blocked!');
-      // console.log(`Confidence Positive: ${matched_tweets[0].confidencePositive}`);
-      console.log(matched_tweets[0].text);
+    if (matched_tweets[0].filter) {
       tweet.style.display = 'none';
+      console.log('Tweet Blocked!');
+      console.log(`Confidence Positive: ${matched_tweets[0].confidencePositive}`);
+      console.log(matched_tweets[0].text);
     }
   }
 }

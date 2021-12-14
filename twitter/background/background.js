@@ -1,26 +1,22 @@
-const url = 'https://content-filter-api-js23pan5iq-uc.a.run.app/';
+const url = 'https://content-filter-api-js23pan5iq-uc.a.run.app'
 
 
 chrome.runtime.onMessage.addListener(
   (request, sender, sendResponse) => {
     if (request.type === 'validation') {
       chrome.storage.local.get(['threshold', 'filteredWords'], (retrieved_data) => {
-        const threshold = retrieved_data.threshold || 0.5;
-        const filteredWords = retrieved_data.filteredWords || [];
-        const body = JSON.stringify({body: request.text, threshold: threshold, filter_words: filteredWords})
-        fetch(url + 'filter-multinomial-naive-bayes/', {
+        const threshold = retrieved_data.threshold || 0.5
+        const filteredWords = retrieved_data.filteredWords || []
+        const body = {body: request.text, threshold: threshold, filter_words: filteredWords}
+        fetch(`${url}/filter-twitter-content/`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: body,
+          body: JSON.stringify(body),
         }).then(response => response.json())
           .then(data => {
-            console.log(data);
-            sendResponse({
-              valid: !data.filter,
-              confidencePositive: data.confidencepositive
-            })
+            sendResponse(data);
           })
           .catch(error => console.log("error", error));
       });

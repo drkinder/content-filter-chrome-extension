@@ -1,0 +1,68 @@
+body {
+    background-color: rgb(0, 46, 96);
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 5px;
+}
+.m-1 {
+    margin: 2px;
+}
+.p-1 {
+    padding: 1px;
+}
+.mt-1 {
+    margin-top: 2px;
+}
+.mb-1 {
+    margin-bottom: 2px;
+}
+.mb-16 {
+    margin-bottom: 16px;
+}
+.w-5 {
+    min-width: 5rem;
+}
+.w-6 {
+    min-width: 6rem;
+}
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
+.text-center {
+    text-align: center;
+}
+.font-size-small {
+    font-size: small;
+}
+.text-yellow {
+    color: rgb(255, 205, 52);
+}
+.text-white {
+    color: white;
+}
+.text-muted {
+    color: rgb(17, 103, 179);
+}
+.background-yellow {
+    background-color: rgb(255, 205, 52);
+}
+.background-muted {
+    background-color: rgb(17, 103, 179);
+}
+.background-blue {
+    background-color: rgb(0, 46, 96);
+}
+.font-bolder {
+    font-weight: bolder;
+}
+.no-border {
+    border: 0px;
+}
+.rounded {
+    border-radius: 5px;
+}
+.d-inline {
+    display: inline-block;
+}
