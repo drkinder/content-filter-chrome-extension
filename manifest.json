@@ -1,6 +1,6 @@
 {
-  "name": "Content Filter",
-  "description": "MADS Social Media Content Filter Chrome Extension",
+  "name": "Twitter Content Filter",
+  "description": "Twitter Content Filter",
   "version": "1.0",
   "manifest_version": 3,
   "permissions": [
