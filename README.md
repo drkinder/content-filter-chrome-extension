@@ -4,13 +4,15 @@ This extension works by initially hiding new Tweets loaded into a user's Timelin
 Next, it collects the text content of the Tweet and sends it to an API running on Google Cloud for machine learning 
 sentiment analysis. If the predicted probability of the Tweet being positive is below a user-defined threshold 
 (accessible in the extension user interface), then the Tweet will remain hidden on the Timeline. Otherwise, the 
-previously hidden Tweet will be revealed. 
+previously hidden Tweet will be revealed.
 
 Users also have the option to specify specific words or topics through
 the extension user interface that they would like to have filtered from their Timeline. If these words are provided 
 by the user, our algorithm will also consider synonyms and related topics and attempt to filter them as well. This
 extension currently only supports filtering in the English language and all Tweets that are suspected to be
 in a language other than English, will by default remain shown in the user's Timeline.
+
+To learn more about the project, visit the Github repository [Social Media Content Filter](https://github.com/mphillipsjr96/SocialMedia_Content_Filter)
 
 ## Authors
 - [Dylan Kinder](https://github.com/drkinder)
