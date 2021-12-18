@@ -89,8 +89,8 @@ const filterTweet = (tweet, tweetArticle) => {
     if (matched_tweets[0].filter) {
       tweet.style.display = 'none';
       console.log('Tweet Blocked!');
-      console.log(`Confidence Positive: ${matched_tweets[0].confidencePositive}`);
-      console.log(matched_tweets[0].text);
+      // console.log(`Confidence Positive: ${matched_tweets[0].confidencePositive}`);
+      // console.log(matched_tweets[0].text);
     }
   }
 }

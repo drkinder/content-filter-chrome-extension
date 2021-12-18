@@ -5,9 +5,10 @@ chrome.runtime.onMessage.addListener(
   (request, sender, sendResponse) => {
     if (request.type === 'validation') {
       chrome.storage.local.get(['threshold', 'filteredWords'], (retrieved_data) => {
-        const threshold = retrieved_data.threshold || 0.5
-        const filteredWords = retrieved_data.filteredWords || []
-        const body = {body: request.text, threshold: threshold, filter_words: filteredWords}
+        const threshold = retrieved_data.threshold || 0.5;
+		console.log(threshold);
+        const filteredWords = retrieved_data.filteredWords || [];
+        const body = {body: request.text, threshold: threshold, filter_words: filteredWords};
         fetch(`${url}/filter-twitter-content/`, {
           method: 'POST',
           headers: {
