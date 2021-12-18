@@ -91,6 +91,6 @@ const resetFilteredWordsList = () => {
 
 const resetThresholdRange = () => {
   localStorage.removeItem('threshold')
-  chrome.runtime.sendMessage({type: "threshold", threshold: 0.5})
-  document.getElementById('thresholdRange').value = 50;
+  chrome.runtime.sendMessage({type: "threshold", threshold: 0.55})
+  document.getElementById('thresholdRange').value = 55;
 }

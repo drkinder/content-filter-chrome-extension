@@ -5,7 +5,7 @@ const processed_tweets = [];
 const pageToSelectorMap = [
   {location: 'home', timelineSelector: '[aria-label="Timeline: Your Home Timeline"]'},
   {location: 'explore', timelineSelector: '[aria-label="Timeline: Explore"]'},
-]
+];
 
 function addTitleObserverIfAvailable() {
   const title = document.getElementsByTagName('title')
@@ -16,7 +16,6 @@ function addTitleObserverIfAvailable() {
     return;
   }
   twitterTitleObserver.observe(title[0], twitterTittleObserverConfig)
-
 }
 
 addTitleObserverIfAvailable();
